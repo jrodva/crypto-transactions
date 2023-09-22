@@ -68,7 +68,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["client/**/*.ts", "client/**/*.html"]
+        "lintFilePatterns": ["apps/client/**/*.ts", "apps/client/**/*.html"]
       }
     },
     "test": {
