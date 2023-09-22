@@ -26,13 +26,6 @@
       "options": {
         "lintFilePatterns": ["apps/client-e2e/**/*.{js,ts}"]
       }
-    },
-    "lint-fix": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["apps/client-e2e/**/*.{js,ts}"],
-        "fix": true
-      }
     }
   },
   "tags": [],

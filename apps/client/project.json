@@ -71,13 +71,6 @@
         "lintFilePatterns": ["apps/client/**/*.ts", "apps/client/**/*.html"]
       }
     },
-    "lint-fix": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["apps/client/**/*.ts", "apps/client/**/*.html"],
-        "fix": true
-      }
-    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
