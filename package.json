@@ -7,7 +7,8 @@
     "serve:server": "nx serve server",
     "serve:client": "nx serve apps/client",
     "serve:all": "nx run-many --target=serve --projects=server,client",
-    "lint": "nx run-many --target=lint --projects=server,client,server-e2e,client-e2e --verbose"
+    "lint": "nx run-many --target=lint --projects=server,client,server-e2e,client-e2e --verbose",
+    "lint:fix": "nx run-many --target=lint-fix --projects=server,client,server-e2e,client-e2e --verbose"
   },
   "private": true,
   "dependencies": {

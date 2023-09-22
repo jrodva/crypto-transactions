@@ -45,6 +45,13 @@
         "lintFilePatterns": ["apps/server/**/*.ts"]
       }
     },
+    "lint-fix": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/server/**/*.ts"],
+        "fix": true
+      }
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
