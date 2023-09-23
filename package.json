@@ -9,7 +9,8 @@
     "serve:all": "nx run-many --target=serve --projects=server,client",
     "lint": "nx run-many --target=lint --verbose",
     "lint:fix": "nx run-many --target=lint --fix --verbose",
-    "format": "nx format:write --all"
+    "format": "nx format:write --all",
+    "format:check": "nx format:check --all"
   },
   "private": true,
   "dependencies": {
@@ -81,7 +82,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,html,css,scss}": [
+    "apps/**/src/app/*.{ts,tsx,js,jsx,json,html,css,scss}": [
       "npm run format",
       "git add"
     ]
