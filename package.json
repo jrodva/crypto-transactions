@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "nx": "nx",
     "serve:server": "nx serve server",
     "serve:client": "nx serve apps/client",
@@ -82,7 +83,7 @@
     }
   },
   "lint-staged": {
-    "apps/**/src/app/*.{ts,tsx,js,jsx,json,html,css,scss}": [
+    "*.{ts,tsx,js,jsx,json,html,css,scss}": [
       "npm run format",
       "git add"
     ]
