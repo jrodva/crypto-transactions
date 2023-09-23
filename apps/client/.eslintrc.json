@@ -24,6 +24,9 @@
             "prefix": "crypto-transactions",
             "style": "kebab-case"
           }
+        ],
+        "@angular-eslint/sort-ngmodule-metadata-arrays": [
+          "error"
         ]
       }
     },
