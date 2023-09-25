@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .rate {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
