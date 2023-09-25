@@ -9,9 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
+import { AccountsListComponent } from './components/accounts-list/accounts-list.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AccountsListComponent, AppComponent, HeaderComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
