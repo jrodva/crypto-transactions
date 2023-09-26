@@ -1,7 +1,7 @@
-table {
-  width: 100%;
+.account-list-container {
+  overflow-x: scroll;
+}
 
-  th.mat-sort-header-sorted {
-    color: black;
-  }
+mat-spinner {
+  margin: 50px auto;
 }
