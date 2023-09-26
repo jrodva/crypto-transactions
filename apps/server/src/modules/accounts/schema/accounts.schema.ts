@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Account } from '@libs/interfaces';
 
 export type AccountsDocument = Accounts & Document;
 
@@ -9,7 +10,7 @@ export type Balance = {
 };
 
 @Schema()
-export class Accounts {
+export class Accounts implements Account {
   @Prop({ required: true })
   _id: string;
 
