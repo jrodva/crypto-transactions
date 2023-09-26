@@ -3,6 +3,9 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BtcRateService } from './services/btc-rate/btc-rate.service';
 
+const CUSTOM_ICON_NAME = 'bitcoin';
+const CUSTOM_ICON_URL = 'assets/icons/bitcoin.svg';
+
 @Component({
   selector: 'crypto-transactions-root',
   templateUrl: './app.component.html',
@@ -17,8 +20,8 @@ export class AppComponent {
     private btcRateService: BtcRateService
   ) {
     this.matIconRegistry.addSvgIcon(
-      'bitcoin',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/bitcoin.svg')
+      CUSTOM_ICON_NAME,
+      this.domSanitizer.bypassSecurityTrustResourceUrl(CUSTOM_ICON_URL)
     );
   }
 }
