@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BtcRateService } from './services/btc-rate.service';
+import { BtcRateService } from './services/btc-rate/btc-rate.service';
 
 @Component({
   selector: 'crypto-transactions-root',
