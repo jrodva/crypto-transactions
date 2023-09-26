@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { AccountsListComponent } from './components/accounts-list/accounts-list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [AccountsListComponent, AppComponent, HeaderComponent],
@@ -19,6 +21,8 @@ import { AccountsListComponent } from './components/accounts-list/accounts-list.
     HttpClientModule,
     MatButtonModule,
     MatIconModule,
+    MatSortModule,
+    MatTableModule,
     MatToolbarModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
   ],

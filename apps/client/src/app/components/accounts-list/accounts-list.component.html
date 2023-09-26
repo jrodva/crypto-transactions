@@ -1,1 +1,35 @@
-<p>Accounts List works!</p>
+<ng-container *ngIf="dataSource.data.length > 0">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by account name">
+        Account Name
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by category name">Category</th>
+      <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="tags">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by tags">Tags</th>
+      <td mat-cell *matCellDef="let element">{{ element.tags.join(' | ') }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="current-balance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by current balance">Balance</th>
+      <td mat-cell *matCellDef="let element">{{ element.balance.current }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="available-balance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by current balance">
+        Available Balance
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.balance.available }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</ng-container>
