@@ -4,5 +4,6 @@ export const environment = {
     ACCOUNTS: 'accounts',
     BTC_RATE: 'btc-rate',
   },
+  WS_URL: '[INTRODUCE YOUR OWN PRODUCTION WS URL]',
   production: true,
 };

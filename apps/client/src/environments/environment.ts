@@ -4,5 +4,6 @@ export const environment = {
     ACCOUNTS: 'accounts',
     BTC_RATE: 'btc-rate',
   },
+  WS_URL: 'http://localhost:83',
   production: false,
 };
