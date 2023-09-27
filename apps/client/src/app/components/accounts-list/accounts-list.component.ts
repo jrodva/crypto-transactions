@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Account } from '@libs/interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { MatSort, Sort } from '@angular/material/sort';
+import { BtcRateService } from '../../services/btc-rate/btc-rate.service';
 
 @Component({
   selector: 'crypto-transactions-accounts-list',
@@ -11,14 +12,15 @@ import { MatSort, Sort } from '@angular/material/sort';
   styleUrls: ['./accounts-list.component.scss'],
 })
 export class AccountsListComponent implements OnInit, OnDestroy, AfterViewInit {
-  dataSource: MatTableDataSource<Account> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Account> = new MatTableDataSource<Account>([]);
   accounts$: Observable<Account[]> = this.accountsService.getAccounts();
   accountsSubscription: Subscription;
+  btcRate$ = this.btcRateService.currentBtcRate$;
   displayedColumns: string[] = ['name', 'category', 'tags', 'current-balance', 'available-balance'];
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private accountsService: AccountsService) {}
+  constructor(private accountsService: AccountsService, private btcRateService: BtcRateService) {}
 
   ngOnInit() {
     this.accountsSubscription = this.accounts$.subscribe((accounts) => {

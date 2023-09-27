@@ -1,4 +1,4 @@
-<div *ngIf="dataSource.data.length > 0; else loading" class="account-list-container">
+<div *ngIf="dataSource.data.length > 0 && (btcRate$ | async) as btcRate; else loading" class="account-list-container">
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by account name">
@@ -19,14 +19,20 @@
 
     <ng-container matColumnDef="current-balance">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by current balance">Balance</th>
-      <td mat-cell *matCellDef="let element">{{ element.balance.current }} BTC</td>
+      <td mat-cell *matCellDef="let element">
+        <p>{{ element.balance.current }} BTC</p>
+        <p>${{ (element.balance.current * btcRate).toFixed(2) }}</p>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="available-balance">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by current balance">
         Available Balance
       </th>
-      <td mat-cell *matCellDef="let element">{{ element.balance.available }} BTC</td>
+      <td mat-cell *matCellDef="let element">
+        <p>{{ element.balance.available }} BTC</p>
+        <p>${{ (element.balance.available * btcRate).toFixed(2) }}</p>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
