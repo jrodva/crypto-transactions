@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private socket: Socket) {}
 
   getBtcRate(): Observable<number> {
-    const {
-      API_URL: { BASE, BTC_RATE },
-    } = environment;
-
-    return this.http.get<number>([BASE, BTC_RATE].join('/'));
+    return this.socket.fromEvent<number>('exchange-rate');
   }
 }

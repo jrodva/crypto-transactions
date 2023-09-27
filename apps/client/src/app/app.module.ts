@@ -14,6 +14,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
+
+const config: SocketIoConfig = { url: environment.WS_URL, options: {} };
 
 @NgModule({
   declarations: [AccountsListComponent, AppComponent, BreadcrumbComponent, HeaderComponent],
@@ -28,6 +32,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     MatTableModule,
     MatToolbarModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    SocketIoModule.forRoot(config),
   ],
   providers: [],
   bootstrap: [AppComponent],
