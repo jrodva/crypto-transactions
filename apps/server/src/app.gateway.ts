@@ -8,6 +8,7 @@ import {
 import { Server } from 'socket.io';
 import { BtcRateService } from './modules/btc-rate/btc-rate.service';
 import { Logger } from '@nestjs/common';
+import { WSS_EVENTS } from '@libs/constants';
 
 const REQUEST_INTERVAL = 30000;
 
@@ -39,7 +40,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     this.exchangeRateInterval = setInterval(() => {
       const rate = this.btcRateService.findAll();
 
-      this.wss.emit('exchange-rate', rate);
+      this.wss.emit(WSS_EVENTS.EXCHANGE_RATE, rate);
     }, REQUEST_INTERVAL);
   }
 }

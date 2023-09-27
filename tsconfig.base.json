@@ -18,6 +18,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@libs/constants": [
+        "libs/constants/index.ts"
+      ],
       "@libs/interfaces": [
         "libs/interfaces/index.ts"
       ]
