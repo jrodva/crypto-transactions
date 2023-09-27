@@ -5,6 +5,8 @@ import { Account } from '@libs/interfaces';
 import { Observable, Subscription } from 'rxjs';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BtcRateService } from '../../services/btc-rate/btc-rate.service';
+import { ActivatedRoute } from '@angular/router';
+import { BreadcrumbService } from '../../services/breadcrumb/breadcrumb.service';
 
 @Component({
   selector: 'crypto-transactions-accounts-list',
@@ -20,9 +22,19 @@ export class AccountsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private accountsService: AccountsService, private btcRateService: BtcRateService) {}
+  constructor(
+    private accountsService: AccountsService,
+    private btcRateService: BtcRateService,
+    private breadcrumbService: BreadcrumbService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    const breadcrumb = new Map<string, string>();
+
+    breadcrumb.set('full', this.route.snapshot.data['breadcrumb']['full']);
+    breadcrumb.set('currentLevel', this.route.snapshot.data['breadcrumb']['currentLevel']);
+    this.breadcrumbService.updateCurrentBreadcrumbSubject(breadcrumb);
     this.accountsSubscription = this.accounts$.subscribe((accounts) => {
       this.dataSource.data = accounts;
     });

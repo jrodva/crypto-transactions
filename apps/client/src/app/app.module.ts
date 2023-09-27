@@ -12,15 +12,19 @@ import { HeaderComponent } from './components/header/header.component';
 import { AccountsListComponent } from './components/accounts-list/accounts-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 
 @NgModule({
-  declarations: [AccountsListComponent, AppComponent, HeaderComponent],
+  declarations: [AccountDetailComponent, AccountsListComponent, AppComponent, BreadcrumbComponent, HeaderComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatSortModule,
     MatTableModule,
     MatToolbarModule,

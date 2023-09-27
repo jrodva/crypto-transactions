@@ -12,7 +12,10 @@ export const appRoutes: Route[] = [
     component: AccountsListComponent,
     title: 'Crypto Transactions',
     data: {
-      breadcrumb: 'Accounts',
+      breadcrumb: {
+        currentLevel: 'Accounts',
+        full: 'Home / Accounts',
+      },
     },
   },
 ];

@@ -1,0 +1,4 @@
+<div *ngIf="currentBreadcrumb$ | async as currentBreadCrumb" class="breadcrumb-container">
+  <h2>{{ currentBreadCrumb.get('currentLevel') }}</h2>
+  <p>{{ currentBreadCrumb.get('full') }}</p>
+</div>
