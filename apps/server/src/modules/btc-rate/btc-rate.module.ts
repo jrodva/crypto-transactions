@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { BtcRateService } from './btc-rate.service';
-import { BtcRateController } from './btc-rate.controller';
 
 @Module({
-  controllers: [BtcRateController],
   providers: [BtcRateService],
+  exports: [BtcRateService],
 })
 export class BtcRateModule {}
