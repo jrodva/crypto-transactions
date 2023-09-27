@@ -4,7 +4,7 @@
   </button>
   <div class="rate">
     <mat-icon svgIcon="bitcoin"></mat-icon>
-    <span> : ${{ btcRate }}</span>
+    <span> : ${{ btcRate$ | async }}</span>
   </div>
   <button mat-icon-button aria-label="icon-button with notification icon">
     <mat-icon>notifications_none icon</mat-icon>

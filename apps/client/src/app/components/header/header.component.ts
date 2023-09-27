@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { BtcRateService } from '../../services/btc-rate/btc-rate.service';
 
 @Component({
   selector: 'crypto-transactions-header',
@@ -6,5 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Input() btcRate: number | null = null;
+  btcRate$ = this.btcRateService.currentBtcRate$;
+
+  constructor(private btcRateService: BtcRateService) {}
 }
