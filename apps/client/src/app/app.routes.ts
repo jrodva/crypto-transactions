@@ -4,7 +4,15 @@ import { AccountsListComponent } from './components/accounts-list/accounts-list.
 export const appRoutes: Route[] = [
   {
     path: '',
+    redirectTo: 'accounts',
+    pathMatch: 'full',
+  },
+  {
+    path: 'accounts',
     component: AccountsListComponent,
     title: 'Crypto Transactions',
+    data: {
+      breadcrumb: 'Accounts',
+    },
   },
 ];
