@@ -3,6 +3,6 @@ export const environment = {
     BASE: 'http://localhost:5000/api',
     ACCOUNTS: 'accounts',
   },
-  WS_URL: 'http://localhost:83',
+  WSS_URL: 'http://localhost:83',
   production: false,
 };

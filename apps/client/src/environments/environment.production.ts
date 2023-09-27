@@ -3,6 +3,6 @@ export const environment = {
     BASE: '[INTRODUCE YOUR OWN PRODUCTION API URL]',
     ACCOUNTS: 'accounts',
   },
-  WS_URL: '[INTRODUCE YOUR OWN PRODUCTION WS URL]',
+  WSS_URL: '[INTRODUCE YOUR OWN PRODUCTION WS URL]',
   production: true,
 };
