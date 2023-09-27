@@ -6,6 +6,12 @@
   top: 0;
   z-index: 1;
 
+  button.menu-header-button {
+    background-color: #00ba90;
+    color: #ffffff;
+    border-radius: 0;
+  }
+
   .rate {
     display: flex;
     align-items: center;
