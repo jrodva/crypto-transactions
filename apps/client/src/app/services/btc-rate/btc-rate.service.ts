@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BtcRateService {
-  constructor(private http: HttpClient) {}
+  private currentBtcRateSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  currentBtcRate$: Observable<number> = this.currentBtcRateSubject.asObservable();
 
-  getBtcRate(): Observable<number> {
-    const {
-      API_URL: { BASE, BTC_RATE },
-    } = environment;
+  constructor(private apiService: ApiService) {}
 
-    return this.http.get<number>([BASE, BTC_RATE].join('/'));
+  private updateCurrentBtcRate(rate: number): void {
+    this.currentBtcRateSubject.next(rate);
+  }
+
+  updateCurrentBtcRateWithDataFromApi(): void {
+    this.apiService.getBtcRate().subscribe((rate) => {
+      this.updateCurrentBtcRate(rate);
+    });
   }
 }

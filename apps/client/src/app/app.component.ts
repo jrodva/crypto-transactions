@@ -12,13 +12,12 @@ const CUSTOM_ICON_URL = 'assets/icons/bitcoin.svg';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  btcRate$ = this.btcRateService.getBtcRate();
-
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private btcRateService: BtcRateService
   ) {
+    this.btcRateService.updateCurrentBtcRateWithDataFromApi();
     this.matIconRegistry.addSvgIcon(
       CUSTOM_ICON_NAME,
       this.domSanitizer.bypassSecurityTrustResourceUrl(CUSTOM_ICON_URL)
