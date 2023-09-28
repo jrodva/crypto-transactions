@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Account } from '@libs/interfaces';
+import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountsService {
-  constructor(private http: HttpClient) {}
+  private accountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  accounts$: Observable<Account[]> = this.accountsSubject.asObservable();
 
-  getAccounts(): Observable<Account[]> {
-    const {
-      API_URL: { BASE, ACCOUNTS },
-    } = environment;
+  constructor(private apiService: ApiService) {}
 
-    return this.http.get<Account[]>([BASE, ACCOUNTS].join('/'));
+  private updateAccounts(accounts: Account[]): void {
+    this.accountsSubject.next(accounts);
+  }
+
+  updateAccountsWithDataFromApi(): void {
+    this.apiService.getAccounts().subscribe((accounts) => {
+      this.updateAccounts(accounts);
+    });
   }
 }

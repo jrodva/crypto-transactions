@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AccountsService } from '../../services/accounts/accounts.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Account } from '@libs/interfaces';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, withLatestFrom } from 'rxjs';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BtcRateService } from '../../services/btc-rate/btc-rate.service';
 import { ActivatedRoute } from '@angular/router';
@@ -13,11 +13,14 @@ import { BreadcrumbService } from '../../services/breadcrumb/breadcrumb.service'
   templateUrl: './accounts-list.component.html',
   styleUrls: ['./accounts-list.component.scss'],
 })
-export class AccountsListComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AccountsListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Account> = new MatTableDataSource<Account>([]);
-  accounts$: Observable<Account[]> = this.accountsService.getAccounts();
-  accountsSubscription: Subscription;
-  btcRate$ = this.btcRateService.currentBtcRate$;
+  accounts$: Observable<Account[]> = this.accountsService.accounts$;
+  btcRate$: Observable<number> = this.btcRateService.currentBtcRate$;
+  data$: Observable<{ btcRate: number; accounts: Account[] }> = this.btcRate$.pipe(
+    withLatestFrom(this.accounts$),
+    map(([btcRate, accounts]) => ({ btcRate, accounts }))
+  );
   displayedColumns: string[] = ['name', 'category', 'tags', 'current-balance', 'available-balance'];
 
   @ViewChild(MatSort) sort: MatSort;
@@ -35,9 +38,6 @@ export class AccountsListComponent implements OnInit, OnDestroy, AfterViewInit {
     breadcrumb.set('full', this.route.snapshot.data['breadcrumb']['full']);
     breadcrumb.set('currentLevel', this.route.snapshot.data['breadcrumb']['currentLevel']);
     this.breadcrumbService.updateCurrentBreadcrumbSubject(breadcrumb);
-    this.accountsSubscription = this.accounts$.subscribe((accounts) => {
-      this.dataSource.data = accounts;
-    });
   }
 
   ngAfterViewInit() {
@@ -74,9 +74,5 @@ export class AccountsListComponent implements OnInit, OnDestroy, AfterViewInit {
           return 0;
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.accountsSubscription.unsubscribe();
   }
 }
