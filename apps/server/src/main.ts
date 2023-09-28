@@ -2,8 +2,7 @@
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
-
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -25,7 +24,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('docs', app, document);
-
+  app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
 
   await app.listen(port);

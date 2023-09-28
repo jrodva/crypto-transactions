@@ -34,6 +34,8 @@
     "@nestjs/swagger": "^7.1.12",
     "@nestjs/websockets": "^10.2.6",
     "axios": "^1.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "dotenv": "^16.3.1",
     "mongoose": "^7.5.2",
     "ngx-socket-io": "^4.5.1",

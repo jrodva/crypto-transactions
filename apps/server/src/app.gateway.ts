@@ -9,8 +9,12 @@ import { Server } from 'socket.io';
 import { BtcRateService } from './modules/btc-rate/btc-rate.service';
 import { Logger } from '@nestjs/common';
 import { WSS_EVENTS } from '@libs/constants';
+import { AccountsService } from './modules/accounts/accounts.service';
 
-const REQUEST_INTERVAL = 30000;
+const ACCOUNTS_MS = 20000;
+const EXCHANGE_RATE_MS = 30000;
+const POSSIBLE_BALANCES_CHANGES = [0.5, 1, 1.5];
+const RANDOM_MULTIPLIER = POSSIBLE_BALANCES_CHANGES[Math.floor(Math.random() * POSSIBLE_BALANCES_CHANGES.length)];
 
 @WebSocketGateway(83, {
   cors: { origin: '*' },
@@ -19,11 +23,13 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   private logger: Logger = new Logger('AppGateway');
   @WebSocketServer() wss: Server;
   private exchangeRateInterval: NodeJS.Timeout;
+  private accountsInterval: NodeJS.Timeout;
 
-  constructor(private btcRateService: BtcRateService) {}
+  constructor(private accountsService: AccountsService, private btcRateService: BtcRateService) {}
 
   afterInit() {
     this.logger.log('The connection is ready');
+    this.sendAccountWithNewBalance();
     this.sendExchangeRate();
   }
 
@@ -33,14 +39,39 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
   handleDisconnect() {
     this.logger.log('New client disconnected');
+    clearInterval(this.accountsInterval);
     clearInterval(this.exchangeRateInterval);
   }
 
-  sendExchangeRate() {
+  private sendAccountWithNewBalance() {
+    this.accountsInterval = setInterval(async () => {
+      try {
+        const accounts = await this.accountsService.findAll();
+        const selectedAccount = accounts[Math.floor(Math.random() * accounts.length)];
+        const {
+          balance: { available, current },
+        } = selectedAccount;
+
+        selectedAccount.balance.available = (RANDOM_MULTIPLIER * available).toFixed(8);
+        selectedAccount.balance.current = (RANDOM_MULTIPLIER * current).toFixed(8);
+
+        const { _id, balance } = await this.accountsService.update(selectedAccount._id, selectedAccount);
+
+        this.wss.emit(WSS_EVENTS.ACCOUNT, {
+          _id,
+          balance,
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
+    }, ACCOUNTS_MS);
+  }
+
+  private sendExchangeRate() {
     this.exchangeRateInterval = setInterval(() => {
       const rate = this.btcRateService.findAll();
 
       this.wss.emit(WSS_EVENTS.EXCHANGE_RATE, rate);
-    }, REQUEST_INTERVAL);
+    }, EXCHANGE_RATE_MS);
   }
 }
