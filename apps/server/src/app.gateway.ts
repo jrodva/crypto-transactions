@@ -12,8 +12,8 @@ import { Logger } from '@nestjs/common';
 import { WSS_EVENTS } from '@libs/constants';
 import { AccountsService } from './modules/accounts/accounts.service';
 
-const BALANCE_MS = 2000;
-const EXCHANGE_RATE_MS = 5000;
+const BALANCE_MS = 40000;
+const EXCHANGE_RATE_MS = 30000;
 const POSSIBLE_BALANCES_CHANGES = [0.5, 1, 1.5];
 const RANDOM_MULTIPLIER = POSSIBLE_BALANCES_CHANGES[Math.floor(Math.random() * POSSIBLE_BALANCES_CHANGES.length)];
 
