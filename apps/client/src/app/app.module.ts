@@ -17,7 +17,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 
-const config: SocketIoConfig = { url: environment.WSS_URL, options: {} };
+const config: SocketIoConfig = { url: environment.WSS_URL, options: { autoConnect: true, transports: ['websocket'] } };
 
 @NgModule({
   declarations: [AccountsListComponent, AppComponent, BreadcrumbComponent, HeaderComponent],
