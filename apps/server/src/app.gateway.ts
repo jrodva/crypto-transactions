@@ -2,6 +2,7 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
+  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
@@ -11,7 +12,7 @@ import { Logger } from '@nestjs/common';
 import { WSS_EVENTS } from '@libs/constants';
 import { AccountsService } from './modules/accounts/accounts.service';
 
-const ACCOUNTS_MS = 20000;
+const BALANCE_MS = 5000;
 const EXCHANGE_RATE_MS = 30000;
 const POSSIBLE_BALANCES_CHANGES = [0.5, 1, 1.5];
 const RANDOM_MULTIPLIER = POSSIBLE_BALANCES_CHANGES[Math.floor(Math.random() * POSSIBLE_BALANCES_CHANGES.length)];
@@ -29,7 +30,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
   afterInit() {
     this.logger.log('The connection is ready');
-    this.sendAccountWithNewBalance();
     this.sendExchangeRate();
   }
 
@@ -43,7 +43,9 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     clearInterval(this.exchangeRateInterval);
   }
 
-  private sendAccountWithNewBalance() {
+  @SubscribeMessage(WSS_EVENTS.ACCOUNT)
+  sendAccountWithNewBalance() {
+    this.logger.log('Start sending account with new balance');
     this.accountsInterval = setInterval(async () => {
       try {
         const accounts = await this.accountsService.findAll();
@@ -54,17 +56,15 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
         selectedAccount.balance.available = (RANDOM_MULTIPLIER * available).toFixed(8);
         selectedAccount.balance.current = (RANDOM_MULTIPLIER * current).toFixed(8);
-
-        const { _id, balance } = await this.accountsService.update(selectedAccount._id, selectedAccount);
-
+        await this.accountsService.update(selectedAccount._id, selectedAccount);
         this.wss.emit(WSS_EVENTS.ACCOUNT, {
-          _id,
-          balance,
+          _id: selectedAccount._id,
+          balance: selectedAccount.balance,
         });
       } catch (error) {
         throw new Error(error);
       }
-    }, ACCOUNTS_MS);
+    }, BALANCE_MS);
   }
 
   private sendExchangeRate() {

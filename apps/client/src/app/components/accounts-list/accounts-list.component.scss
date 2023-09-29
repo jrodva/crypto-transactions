@@ -1,5 +1,49 @@
 .account-list-container {
   overflow-x: scroll;
+
+  @keyframes blinker-lower {
+    10% {
+      background: rgba(255, 0, 0, 1);
+    }
+    30% {
+      background: rgba(255, 0, 0, 0.8);
+    }
+    50% {
+      background: rgba(255, 0, 0, 0.6);
+    }
+    70% {
+      background: rgba(255, 0, 0, 0.4);
+    }
+    90% {
+      background: rgba(255, 0, 0, 0.2);
+    }
+  }
+
+  @keyframes blinker-higher {
+    10% {
+      background: rgba(0, 255, 0, 1);
+    }
+    30% {
+      background: rgba(0, 255, 0, 0.8);
+    }
+    50% {
+      background: rgba(0, 255, 0, 0.6);
+    }
+    70% {
+      background: rgba(0, 255, 0, 0.4);
+    }
+    90% {
+      background: rgba(0, 255, 0, 0.2);
+    }
+  }
+
+  .higher-balance {
+    animation: blinker-higher 2s linear;
+  }
+
+  .lower-balance {
+    animation: blinker-lower 2s linear;
+  }
 }
 
 mat-spinner {

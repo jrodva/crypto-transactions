@@ -20,8 +20,8 @@ export class ApiService {
     return this.http.get<Account[]>([BASE, ACCOUNTS].join('/'));
   }
 
-  getAccount(): Observable<Account> {
-    return this.socket.fromEvent<Account>(WSS_EVENTS.ACCOUNT);
+  getAccountWithUpdatedBalance(): Observable<{ _id: string; balance: { available: number; current: number } }> {
+    return this.socket.fromEvent<{ _id: string; balance: { available: number; current: number } }>(WSS_EVENTS.ACCOUNT);
   }
 
   getBtcRate(): Observable<number> {

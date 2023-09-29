@@ -24,7 +24,11 @@ export class AccountsService {
     let updatedAccount = null;
 
     try {
-      updatedAccount = await this.accountsModel.updateOne({ _id: id }, updateAccountDto);
+      updatedAccount = await this.accountsModel.updateOne(
+        { name: updateAccountDto.name, category: updateAccountDto.category, tags: updateAccountDto.tags },
+        { balance: updateAccountDto.balance },
+        { new: true }
+      );
     } catch (error) {
       throw new Error(error);
     }
