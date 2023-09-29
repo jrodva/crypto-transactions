@@ -19,6 +19,8 @@ const RANDOM_MULTIPLIER = POSSIBLE_BALANCES_CHANGES[Math.floor(Math.random() * P
 
 @WebSocketGateway(83, {
   cors: { origin: '*' },
+  transports: ['websocket'],
+  autoConnect: true,
 })
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   private logger: Logger = new Logger('AppGateway');

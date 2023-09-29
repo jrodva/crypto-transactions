@@ -16,11 +16,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 
-const config: SocketIoConfig = { url: environment.WSS_URL, options: {} };
+const config: SocketIoConfig = { url: environment.WSS_URL, options: { transports: ['websocket'], autoConnect: true } };
 
 @NgModule({
-  declarations: [AccountsListComponent, AppComponent, BreadcrumbComponent, HeaderComponent],
+  declarations: [AccountDetailComponent, AccountsListComponent, AppComponent, BreadcrumbComponent, HeaderComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

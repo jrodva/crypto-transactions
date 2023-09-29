@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { AccountsListComponent } from './components/accounts-list/accounts-list.component';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 
 export const appRoutes: Route[] = [
   {
@@ -17,5 +18,18 @@ export const appRoutes: Route[] = [
         full: 'Home / Accounts',
       },
     },
+    children: [
+      {
+        path: ':id',
+        component: AccountDetailComponent,
+        title: 'Crypto Transactions',
+        data: {
+          breadcrumb: {
+            currentLevel: 'Details',
+            full: 'Home / Accounts / Details',
+          },
+        },
+      },
+    ],
   },
 ];

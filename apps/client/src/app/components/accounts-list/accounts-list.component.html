@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <ng-container *ngIf="data$ | async as data">
   <div *ngIf="data.accounts.length > 0; else loading" class="account-list-container">
     <table mat-table [dataSource]="data.accounts" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
@@ -13,7 +14,7 @@
             'lower-balance': isLowerBalance && i === selectedRowIndex
           }"
         >
-          {{ element.name }}
+          <a [routerLink]="['/accounts', i]" mat-raised-button> {{ element.name }}</a>
         </td>
       </ng-container>
 
