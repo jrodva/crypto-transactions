@@ -9,6 +9,14 @@ export class TransactionsService {
   constructor(@InjectModel(Transactions.name) private transactionsModel: Model<TransactionsDocument>) {}
 
   async getTransactionsByIds(ids: string[]): Promise<Transaction[]> {
-    return this.transactionsModel.find({ _id: { $in: ids } }).exec();
+    let transactions = [];
+
+    try {
+      transactions = await this.transactionsModel.find({ _id: { $in: ids } });
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return transactions;
   }
 }
