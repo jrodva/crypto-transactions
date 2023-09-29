@@ -18,6 +18,12 @@ There are 4 branches in this repository:
 As there are some breaking changes among parts we prefer to have different branches for each part.
 
 
+## Database preview
+![accounts.png](apps/client/src/assets/accounts.png)
+
+![transactions.png](apps/client/src/assets/transactions.png)
+
+
 ## Getting started
 1. To ensure that you have `Node 18.16.0`. We recommend to use `nvm`, so you can run `nvm use` to select the correct node version based on the `.nvmrc` file.
 2. Run `npm install`.
