@@ -18,7 +18,7 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 
-const config: SocketIoConfig = { url: environment.WSS_URL, options: { transports: ['websocket'], autoConnect: true } };
+const config: SocketIoConfig = { url: environment.WSS_URL, options: { autoConnect: true, transports: ['websocket'] } };
 
 @NgModule({
   declarations: [AccountDetailComponent, AccountsListComponent, AppComponent, BreadcrumbComponent, HeaderComponent],
