@@ -2,8 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular
 import { AccountsService } from '../../services/accounts/accounts.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Account } from '@libs/interfaces';
-import { map, Observable, Subscription } from 'rxjs';
-import { take, withLatestFrom } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { MatSort, Sort } from '@angular/material/sort';
 import { BtcRateService } from '../../services/btc-rate/btc-rate.service';
 import { ActivatedRoute } from '@angular/router';
@@ -21,11 +21,7 @@ const ASCENDENT_DIRECTION = 'asc';
 export class AccountsListComponent implements OnInit, AfterViewInit, OnDestroy {
   dataSource: MatTableDataSource<Account> = new MatTableDataSource<Account>([]);
   accounts$: Observable<Account[]> = this.accountsService.accounts$;
-  btcRate$: Observable<number> = this.btcRateService.currentBtcRate$;
-  data$: Observable<{ btcRate: number; accounts: Account[] }> = this.btcRate$.pipe(
-    withLatestFrom(this.accounts$),
-    map(([btcRate, accounts]) => ({ btcRate, accounts }))
-  );
+  btcRate$ = this.btcRateService.currentBtcRate$;
   randomBalanceAccount$ = this.accountsService.randomBalanceAccount$;
   randomBalanceAccountSubscription: Subscription;
   displayedColumns: string[] = ['name', 'category', 'tags', 'current-balance', 'available-balance'];
@@ -49,8 +45,9 @@ export class AccountsListComponent implements OnInit, AfterViewInit, OnDestroy {
     breadcrumb.set('full', this.route.snapshot.data['breadcrumb']['full']);
     breadcrumb.set('currentLevel', this.route.snapshot.data['breadcrumb']['currentLevel']);
     this.breadcrumbService.updateCurrentBreadcrumbSubject(breadcrumb);
-    this.data$.pipe(take(2)).subscribe(({ accounts, btcRate }) => {
-      if (accounts.length && btcRate) {
+    this.accounts$.pipe(take(2)).subscribe((accounts) => {
+      if (accounts.length) {
+        this.dataSource.data = accounts;
         this.socket.emit(WSS_EVENTS.ACCOUNT);
         this.accountsService.updateBalanceAccountWithRandomDataFromApi();
       }
